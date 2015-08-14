@@ -455,6 +455,7 @@ public class FindInProjectUtil {
     if (classRoot == null) return;
     String relativePath = VfsUtil.getRelativePath(file, classRoot);
     if (relativePath == null) return;
+    // Needs OrderEntries but not perf-critical.
     for (OrderEntry orderEntry : index.getOrderEntriesForFile(file)) {
       for (VirtualFile sourceRoot : orderEntry.getFiles(OrderRootType.SOURCES)) {
         VirtualFile sourceFile = sourceRoot.findFileByRelativePath(relativePath);

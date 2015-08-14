@@ -132,6 +132,7 @@ public abstract class OrderEntryFix implements IntentionAction, LocalQuickFix {
       VirtualFile virtualFile = psiFile.getVirtualFile();
       if (virtualFile == null) continue;
       ModuleFileIndex moduleFileIndex = ModuleRootManager.getInstance(currentModule).getFileIndex();
+      // Libraries.
       for (OrderEntry orderEntry : fileIndex.getOrderEntriesForFile(virtualFile)) {
         if (orderEntry instanceof LibraryOrderEntry) {
           final LibraryOrderEntry libraryEntry = (LibraryOrderEntry)orderEntry;

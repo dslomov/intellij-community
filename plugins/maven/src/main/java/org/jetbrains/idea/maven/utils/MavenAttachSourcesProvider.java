@@ -140,6 +140,7 @@ public class MavenAttachSourcesProvider implements AttachSourcesProvider {
   private static Collection<MavenProject> getMavenProjects(PsiFile psiFile) {
     Project project = psiFile.getProject();
     Collection<MavenProject> result = new ArrayList<MavenProject>();
+    // Needs modules.
     for (OrderEntry each : ProjectRootManager.getInstance(project).getFileIndex().getOrderEntriesForFile(psiFile.getVirtualFile())) {
       MavenProject mavenProject = MavenProjectsManager.getInstance(project).findProject(each.getOwnerModule());
       if (mavenProject != null) result.add(mavenProject);

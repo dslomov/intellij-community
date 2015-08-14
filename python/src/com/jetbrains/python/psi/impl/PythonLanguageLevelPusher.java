@@ -136,6 +136,7 @@ public class PythonLanguageLevelPusher implements FilePropertyPusher<LanguageLev
   @Nullable
   private static Sdk findSdkForFileOutsideTheProject(Project project, VirtualFile file) {
     if (file != null) {
+      // Jdk.
       final Iterable<OrderEntry> orderEntries = ProjectRootManager.getInstance(project).getFileIndex().getOrderEntriesForFile(file);
       for (OrderEntry orderEntry : orderEntries) {
         if (orderEntry instanceof JdkOrderEntry) {

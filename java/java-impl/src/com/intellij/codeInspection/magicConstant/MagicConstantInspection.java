@@ -182,6 +182,7 @@ public class MagicConstantInspection extends BaseJavaLocalInspectionTool {
     if (virtualFile == null) return; // no jdk to attach
     final Iterable<OrderEntry> entries = ProjectRootManager.getInstance(project).getFileIndex().getOrderEntriesForFile(virtualFile);
     Sdk jdk = null;
+    // JDK.
     for (OrderEntry orderEntry : entries) {
       if (orderEntry instanceof JdkOrderEntry) {
         jdk = ((JdkOrderEntry)orderEntry).getJdk();

@@ -146,6 +146,7 @@ public class ExternalAnnotationsManagerImpl extends ReadableExternalAnnotationsM
       notifyAfterAnnotationChanging(listOwner, annotationFQName, false);
       return;
     }
+    // Libraries
     for (final OrderEntry entry : entries) {
       if (entry instanceof ModuleOrderEntry) continue;
       VirtualFile[] roots = AnnotationOrderRootType.getFiles(entry);
@@ -460,6 +461,7 @@ public class ExternalAnnotationsManagerImpl extends ReadableExternalAnnotationsM
     LOG.assertTrue(virtualFile != null);
     final Iterable<OrderEntry> entries = ProjectRootManager.getInstance(project).getFileIndex().getOrderEntriesForFile(virtualFile);
     if (entries.iterator().hasNext()) {
+      // Libraries.
       for (OrderEntry entry : entries) {
         if (!(entry instanceof ModuleOrderEntry)) {
           if (AnnotationOrderRootType.getUrls(entry).length > 0) {

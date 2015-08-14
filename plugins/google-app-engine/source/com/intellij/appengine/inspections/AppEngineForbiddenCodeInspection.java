@@ -121,6 +121,7 @@ public class AppEngineForbiddenCodeInspection extends BaseJavaLocalInspectionToo
             final VirtualFile virtualFile = psiFile.getVirtualFile();
             if (virtualFile != null && !fileIndex.isInSource(virtualFile)) {
               final Iterable<OrderEntry> list = fileIndex.getOrderEntriesForFile(virtualFile);
+              // Searches for JDK.
               for (OrderEntry entry : list) {
                 if (entry instanceof JdkOrderEntry) {
                   final String className = ClassUtil.getJVMClassName((PsiClass)resolved);

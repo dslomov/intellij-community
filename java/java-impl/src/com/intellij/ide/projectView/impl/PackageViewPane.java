@@ -316,6 +316,7 @@ public final class PackageViewPane extends AbstractProjectViewPSIPane {
       }
       if (fileIndex.isInLibrarySource(vFile) || fileIndex.isInLibraryClasses(vFile)) {
         final Iterable<OrderEntry> orderEntries = fileIndex.getOrderEntriesForFile(vFile);
+        // Collects modules.
         if (!orderEntries.iterator().hasNext()) {
           return Module.EMPTY_ARRAY;
         }

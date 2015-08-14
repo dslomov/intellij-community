@@ -60,6 +60,7 @@ public class ReadableExternalAnnotationsManager extends BaseExternalAnnotationsM
   protected List<VirtualFile> getExternalAnnotationsRoots(@NotNull VirtualFile libraryFile) {
     ProjectFileIndex fileIndex = ProjectRootManager.getInstance(myPsiManager.getProject()).getFileIndex();
     Set<VirtualFile> result = new LinkedHashSet<VirtualFile>();
+    // Libraries.
     for (OrderEntry entry : fileIndex.getOrderEntriesForFile(libraryFile)) {
       if (!(entry instanceof ModuleOrderEntry)) {
         Collections.addAll(result, AnnotationOrderRootType.getFiles(entry));

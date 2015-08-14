@@ -320,6 +320,7 @@ public class TreeModelBuilder {
   private OrderEntry getLibraryForFile(VirtualFile virtualFile) {
     if (virtualFile == null) return null;
     Iterable<OrderEntry> orders = myFileIndex.getOrderEntriesForFile(virtualFile);
+    // Libraries. This might be tricky since this is exactly the place that reflects dependencies.
     for (OrderEntry order : orders) {
       if (order instanceof LibraryOrderEntry || order instanceof JdkOrderEntry) return order;
     }

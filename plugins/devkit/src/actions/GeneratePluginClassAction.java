@@ -111,6 +111,7 @@ public abstract class GeneratePluginClassAction extends CreateElementActionBase 
     if (fileIndex.isInLibrarySource(vFile) || fileIndex.isInLibraryClasses(vFile)) {
       final Iterable<OrderEntry> orderEntries = fileIndex.getOrderEntriesForFile(vFile);
       Set<Module> modules = new HashSet<Module>();
+      // Collects modules.
       for (OrderEntry orderEntry : orderEntries) {
         modules.add(orderEntry.getOwnerModule());
       }

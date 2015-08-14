@@ -100,6 +100,11 @@ public class OrderEntryContainer implements Iterable<OrderEntry> {
     return myOrderEntries.length == 0;
   }
 
+  @Override
+  public String toString() {
+    return Arrays.toString(myOrderEntries);
+  }
+
   private static class FakeOrderEntry implements OrderEntry {
     private final Module myOwnerModule;
 

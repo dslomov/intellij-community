@@ -205,6 +205,7 @@ public class AttachSourcesNotificationProvider extends EditorNotifications.Provi
     List<LibraryOrderEntry> entries = null;
 
     ProjectFileIndex index = ProjectFileIndex.SERVICE.getInstance(myProject);
+    // Searches for libraries.
     for (OrderEntry entry : index.getOrderEntriesForFile(file)) {
       if (entry instanceof LibraryOrderEntry) {
         if (entries == null) entries = ContainerUtil.newSmartList();

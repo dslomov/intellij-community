@@ -38,6 +38,7 @@ public class ModuleUtilCore {
     ProjectFileIndex projectFileIndex = ProjectFileIndex.SERVICE.getInstance(project);
     if (isLibraryElement) {
       Iterable<OrderEntry> orders = projectFileIndex.getOrderEntriesForFile(file);
+      // Just needs a check whether in Jdk/Module/Library.
       for(OrderEntry orderEntry:orders) {
         if (orderEntry instanceof ModuleJdkOrderEntry || orderEntry instanceof JdkOrderEntry ||
             orderEntry instanceof LibraryOrderEntry) {
@@ -98,6 +99,7 @@ public class ModuleUtilCore {
         }
       }
       if (fileIndex.isInLibrarySource(vFile) || fileIndex.isInLibraryClasses(vFile)) {
+        // Libraries. Complicated but needs modules only.
         final Iterable<OrderEntry> orderEntries = fileIndex.getOrderEntriesForFile(vFile);
         final Iterator<OrderEntry> iterator = orderEntries.iterator();
         if (!iterator.hasNext()) {

@@ -87,12 +87,17 @@ public class JavaPsiImplementationHelperImpl extends JavaPsiImplementationHelper
       if (psiFile != null) {
         VirtualFile candidateFile = psiFile.getVirtualFile();
         if (candidateFile != null) {
-          // order for file and vFile has non empty intersection.
-          List<OrderEntry> entries = idx.getOrderEntriesForFile(candidateFile);
+          Iterable<OrderEntry> entries = idx.getOrderEntriesForFile(candidateFile);
           //noinspection ForLoopReplaceableByForEach
-          for (int i = 0; i < entries.size(); i++) {
-            if (orderEntries.contains(entries.get(i))) return original;
+          for (OrderEntry entry : entries) {
+            if (orderEntries.contains(entry)) return original;
           }
+          // order for file and vFile has non empty intersection.
+          //List<OrderEntry> entries = idx.getOrderEntriesForFile(candidateFile);
+          //noinspection ForLoopReplaceableByForEach
+          //for (int i = 0; i < entries.size(); i++) {
+          //  if (orderEntries.contains(entries.get(i))) return original;
+          //}
         }
       }
     }

@@ -18,6 +18,7 @@ package com.intellij.openapi.roots;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.impl.OrderEntryContainer;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -65,7 +66,7 @@ public interface ProjectFileIndex extends FileIndex {
    * @return the array of order entries containing the file.
    */
   @NotNull
-  Iterable<OrderEntry> getOrderEntriesForFile(@NotNull VirtualFile file);
+  OrderEntryContainer getOrderEntriesForFile(@NotNull VirtualFile file);
 
   /**
    * Returns a classpath entry to which the specified file or directory belongs.

@@ -164,6 +164,7 @@ public class PatternPackageSet extends PatternBasedPackageSet {
     if (libPattern != null) {
       final Iterable<OrderEntry> entries = fileIndex.getOrderEntriesForFile(file);
       for (OrderEntry orderEntry : entries) {
+        // Only libraries/jdks
         if (orderEntry instanceof LibraryOrderEntry) {
           final String libraryName = ((LibraryOrderEntry)orderEntry).getLibraryName();
           if (libraryName != null) {

@@ -89,7 +89,8 @@ public class ResolveScopeManagerImpl extends ResolveScopeManager {
     if (!projectFileIndex.isInLibrarySource(vFile) && !projectFileIndex.isInLibraryClasses(vFile)) {
       return GlobalSearchScope.allScope(myProject);
     }
-    
+
+    // Libraries. Also uses OrderEntryContainers as keys in the map.
     return LibraryScopeCache.getInstance(myProject).getLibraryScope(projectFileIndex.getOrderEntriesForFile(vFile));
   }
 
@@ -169,6 +170,7 @@ public class ResolveScopeManagerImpl extends ResolveScopeManager {
     final ProjectFileIndex projectFileIndex = myProjectRootManager.getFileIndex();
     final Module module = projectFileIndex.getModuleForFile(vDirectory);
     if (module == null) {
+      // Libraries. OrderEntryContainers as keys in the map.
       final Iterable<OrderEntry> entries = projectFileIndex.getOrderEntriesForFile(virtualFile != null ? virtualFile : vDirectory);
       GlobalSearchScope result = LibraryScopeCache.getInstance(myProject).getLibraryUseScope(entries);
       return containingFile == null || virtualFile.isDirectory() || result.contains(virtualFile)

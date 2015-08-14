@@ -56,6 +56,7 @@ public class ElementLocationUtil {
 
         OrderEntry entry = null;
 
+        // Just needs library.
         for (OrderEntry order : entries) {
           if (order instanceof LibraryOrderEntry || order instanceof JdkOrderEntry) {
             entry = order;

@@ -733,6 +733,7 @@ public class JavaDocumentationProvider implements CodeDocumentationProvider, Ext
       }
     }
 
+    // Needs all order entries, but seems that ModuleOrderEntry can be ignored?
     for (OrderEntry orderEntry : fileIndex.getOrderEntriesForFile(virtualFile)) {
       for (VirtualFile root : orderEntry.getFiles(JavadocOrderRootType.getInstance())) {
         if (root.getFileSystem() == JarFileSystem.getInstance()) {

@@ -81,6 +81,7 @@ public abstract class XmlIndex<V> extends FileBasedIndexExtension<String, V> {
         }
         if (fileIndex.isInLibraryClasses(file)) {
           Iterable<OrderEntry> orderEntries = fileIndex.getOrderEntriesForFile(file);
+          // Just needs module.
           if (!orderEntries.iterator().hasNext()) {
             return false;
           }

@@ -321,6 +321,7 @@ public class UsageInfo2UsageAdapter implements UsageInModule,
     ProjectFileIndex fileIndex = projectRootManager.getFileIndex();
 
     if (psiFile instanceof PsiCompiledElement || fileIndex.isInLibrarySource(virtualFile)) {
+      // Tricky.
       Iterable<OrderEntry> orders = fileIndex.getOrderEntriesForFile(virtualFile);
       for (OrderEntry order : orders) {
         if (order instanceof LibraryOrderEntry || order instanceof JdkOrderEntry) {

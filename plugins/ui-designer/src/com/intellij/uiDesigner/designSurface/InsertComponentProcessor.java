@@ -348,6 +348,7 @@ public final class InsertComponentProcessor extends EventProcessor {
     if (componentClass != null && JavaPsiFacade.getInstance(manager.getProject()).findClass(item.getClassName(), moduleScope) == null) {
       final ProjectFileIndex fileIndex = ProjectRootManager.getInstance(myEditor.getProject()).getFileIndex();
       Iterable<OrderEntry> entries = fileIndex.getOrderEntriesForFile(componentClass.getContainingFile().getVirtualFile());
+      // Tricky.
       if (entries.iterator().hasNext()) {
         final OrderEntry orderEntry = entries.iterator().next();
         if (orderEntry instanceof ModuleSourceOrderEntry) {
