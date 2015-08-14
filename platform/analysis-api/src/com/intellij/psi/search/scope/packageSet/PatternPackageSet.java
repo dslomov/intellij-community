@@ -162,7 +162,7 @@ public class PatternPackageSet extends PatternBasedPackageSet {
                                        final VirtualFile file,
                                        final ProjectFileIndex fileIndex) {
     if (libPattern != null) {
-      final List<OrderEntry> entries = fileIndex.getOrderEntriesForFile(file);
+      final Iterable<OrderEntry> entries = fileIndex.getOrderEntriesForFile(file);
       for (OrderEntry orderEntry : entries) {
         if (orderEntry instanceof LibraryOrderEntry) {
           final String libraryName = ((LibraryOrderEntry)orderEntry).getLibraryName();

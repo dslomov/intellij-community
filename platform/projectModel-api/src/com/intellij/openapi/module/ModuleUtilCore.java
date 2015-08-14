@@ -37,7 +37,7 @@ public class ModuleUtilCore {
   public static boolean projectContainsFile(final Project project, VirtualFile file, boolean isLibraryElement) {
     ProjectFileIndex projectFileIndex = ProjectFileIndex.SERVICE.getInstance(project);
     if (isLibraryElement) {
-      List<OrderEntry> orders = projectFileIndex.getOrderEntriesForFile(file);
+      Iterable<OrderEntry> orders = projectFileIndex.getOrderEntriesForFile(file);
       for(OrderEntry orderEntry:orders) {
         if (orderEntry instanceof ModuleJdkOrderEntry || orderEntry instanceof JdkOrderEntry ||
             orderEntry instanceof LibraryOrderEntry) {
@@ -98,12 +98,14 @@ public class ModuleUtilCore {
         }
       }
       if (fileIndex.isInLibrarySource(vFile) || fileIndex.isInLibraryClasses(vFile)) {
-        final List<OrderEntry> orderEntries = fileIndex.getOrderEntriesForFile(vFile);
-        if (orderEntries.isEmpty()) {
+        final Iterable<OrderEntry> orderEntries = fileIndex.getOrderEntriesForFile(vFile);
+        final Iterator<OrderEntry> iterator = orderEntries.iterator();
+        if (!iterator.hasNext()) {
           return null;
         }
-        if (orderEntries.size() == 1) {
-          return orderEntries.get(0).getOwnerModule();
+        final OrderEntry singleOrderEntry = iterator.next();
+        if (!iterator.hasNext()) {
+          return singleOrderEntry.getOwnerModule();
         }
         Set<Module> modules = new HashSet<Module>();
         for (OrderEntry orderEntry : orderEntries) {

@@ -60,10 +60,10 @@ public class LibraryScopeCache {
       }
     });
   private final ConcurrentMap<String, GlobalSearchScope> mySdkScopes = ContainerUtil.newConcurrentMap();
-  private final Map<List<OrderEntry>, GlobalSearchScope> myLibraryResolveScopeCache = new ConcurrentFactoryMap<List<OrderEntry>, GlobalSearchScope>() {
+  private final Map<Iterable<OrderEntry>, GlobalSearchScope> myLibraryResolveScopeCache = new ConcurrentFactoryMap<Iterable<OrderEntry>, GlobalSearchScope>() {
     @Nullable
     @Override
-    protected GlobalSearchScope create(@NotNull List<OrderEntry> key) {
+    protected GlobalSearchScope create(@NotNull Iterable<OrderEntry> key) {
       return calcLibraryScope(key);
     }
   };
@@ -110,7 +110,7 @@ public class LibraryScopeCache {
    * @return a cached resolve scope
    */
   @NotNull
-  public GlobalSearchScope getLibraryScope(@NotNull List<OrderEntry> orderEntries) {
+  public GlobalSearchScope getLibraryScope(@NotNull Iterable<OrderEntry> orderEntries) {
     return myLibraryResolveScopeCache.get(orderEntries);
   }
 
@@ -120,12 +120,12 @@ public class LibraryScopeCache {
    * @return a cached use scope
    */
   @NotNull
-  public GlobalSearchScope getLibraryUseScope(@NotNull List<OrderEntry> orderEntries) {
+  public GlobalSearchScope getLibraryUseScope(@NotNull Iterable<OrderEntry> orderEntries) {
     return myLibraryUseScopeCache.get(orderEntries);
   }
 
   @NotNull
-  private GlobalSearchScope calcLibraryScope(@NotNull List<OrderEntry> orderEntries) {
+  private GlobalSearchScope calcLibraryScope(@NotNull Iterable<OrderEntry> orderEntries) {
     List<Module> modulesLibraryUsedIn = new ArrayList<Module>();
 
     LibraryOrderEntry lib = null;

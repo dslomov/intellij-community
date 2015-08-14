@@ -41,8 +41,8 @@ public class SdkOrLibraryWeigher extends ProximityWeigher {
   static boolean isJdkElement(PsiElement element, @NotNull final Project project) {
     final VirtualFile file = PsiUtilCore.getVirtualFile(element);
     if (file != null) {
-      List<OrderEntry> orderEntries = ProjectRootManager.getInstance(project).getFileIndex().getOrderEntriesForFile(file);
-      if (!orderEntries.isEmpty() && orderEntries.get(0) instanceof JdkOrderEntry) {
+      Iterable<OrderEntry> orderEntries = ProjectRootManager.getInstance(project).getFileIndex().getOrderEntriesForFile(file);
+      if (!orderEntries.iterator().hasNext() && orderEntries.iterator().next() instanceof JdkOrderEntry) {
         return true;
       }
     }

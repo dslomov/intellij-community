@@ -347,13 +347,14 @@ public final class InsertComponentProcessor extends EventProcessor {
     final PsiClass componentClass = JavaPsiFacade.getInstance(manager.getProject()).findClass(item.getClassName(), projectScope);
     if (componentClass != null && JavaPsiFacade.getInstance(manager.getProject()).findClass(item.getClassName(), moduleScope) == null) {
       final ProjectFileIndex fileIndex = ProjectRootManager.getInstance(myEditor.getProject()).getFileIndex();
-      List<OrderEntry> entries = fileIndex.getOrderEntriesForFile(componentClass.getContainingFile().getVirtualFile());
-      if (entries.size() > 0) {
-        if (entries.get(0) instanceof ModuleSourceOrderEntry) {
-          if (!checkAddModuleDependency(item, (ModuleSourceOrderEntry)entries.get(0))) return false;
+      Iterable<OrderEntry> entries = fileIndex.getOrderEntriesForFile(componentClass.getContainingFile().getVirtualFile());
+      if (entries.iterator().hasNext()) {
+        final OrderEntry orderEntry = entries.iterator().next();
+        if (orderEntry instanceof ModuleSourceOrderEntry) {
+          if (!checkAddModuleDependency(item, (ModuleSourceOrderEntry)orderEntry)) return false;
         }
-        else if (entries.get(0) instanceof LibraryOrderEntry) {
-          if (!checkAddLibraryDependency(item, (LibraryOrderEntry)entries.get(0))) return false;
+        else if (orderEntry instanceof LibraryOrderEntry) {
+          if (!checkAddLibraryDependency(item, (LibraryOrderEntry)orderEntry)) return false;
         }
       }
     }

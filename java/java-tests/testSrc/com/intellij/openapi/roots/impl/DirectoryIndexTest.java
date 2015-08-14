@@ -900,7 +900,7 @@ public class DirectoryIndexTest extends IdeaTestCase {
 
     assertEquals(Arrays.toString(myIndex.getOrderEntries(info)), modulesOfOrderEntries.length, myIndex.getOrderEntries(info).length);
     for (Module aModule : modulesOfOrderEntries) {
-      OrderEntry found = ModuleFileIndexImpl.findOrderEntryWithOwnerModule(aModule, myIndex.getOrderEntries(info));
+      OrderEntry found = myIndex.getOrderEntries(info).findOrderEntryWithOwnerModule(aModule);
       assertNotNull("not found: " + aModule + " in " + Arrays.toString(myIndex.getOrderEntries(info)), found);
     }
   }

@@ -154,7 +154,7 @@ public class LibraryUtil {
 
    @Nullable
   public static OrderEntry findLibraryEntry(VirtualFile file, final Project project) {
-    List<OrderEntry> entries = ProjectRootManager.getInstance(project).getFileIndex().getOrderEntriesForFile(file);
+    Iterable<OrderEntry> entries = ProjectRootManager.getInstance(project).getFileIndex().getOrderEntriesForFile(file);
     for (OrderEntry entry : entries) {
       if (entry instanceof LibraryOrderEntry || entry instanceof JdkOrderEntry) {
         return entry;

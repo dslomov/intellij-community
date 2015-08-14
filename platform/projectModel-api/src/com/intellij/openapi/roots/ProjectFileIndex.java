@@ -65,7 +65,7 @@ public interface ProjectFileIndex extends FileIndex {
    * @return the array of order entries containing the file.
    */
   @NotNull
-  List<OrderEntry> getOrderEntriesForFile(@NotNull VirtualFile file);
+  Iterable<OrderEntry> getOrderEntriesForFile(@NotNull VirtualFile file);
 
   /**
    * Returns a classpath entry to which the specified file or directory belongs.

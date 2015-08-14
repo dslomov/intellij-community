@@ -61,5 +61,5 @@ public abstract class DirectoryIndex {
   }
 
   @NotNull
-  public abstract OrderEntry[] getOrderEntries(@NotNull DirectoryInfo info);
+  public abstract OrderEntryContainer getOrderEntries(@NotNull DirectoryInfo info);
 }

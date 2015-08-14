@@ -47,9 +47,9 @@ public class ProjectAndLibrariesScope extends GlobalSearchScope {
   }
 
   public int compare(@NotNull VirtualFile file1, @NotNull VirtualFile file2) {
-    List<OrderEntry> entries1 = myProjectFileIndex.getOrderEntriesForFile(file1);
-    List<OrderEntry> entries2 = myProjectFileIndex.getOrderEntriesForFile(file2);
-    if (entries1.size() != entries2.size()) return 0;
+    Iterable<OrderEntry> entries1 = myProjectFileIndex.getOrderEntriesForFile(file1);
+    //Iterable<OrderEntry> entries2 = myProjectFileIndex.getOrderEntriesForFile(file2);
+    //if (entries1.size() != entries2.size()) return 0;
 
     int res = 0;
     for (OrderEntry entry1 : entries1) {

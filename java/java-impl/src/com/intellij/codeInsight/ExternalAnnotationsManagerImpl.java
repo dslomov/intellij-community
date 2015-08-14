@@ -140,8 +140,9 @@ public class ExternalAnnotationsManagerImpl extends ReadableExternalAnnotationsM
     final String packageName = ((PsiJavaFile)containingFile).getPackageName();
     final VirtualFile containingVirtualFile = containingFile.getVirtualFile();
     LOG.assertTrue(containingVirtualFile != null);
-    final List<OrderEntry> entries = ProjectRootManager.getInstance(project).getFileIndex().getOrderEntriesForFile(containingVirtualFile);
-    if (entries.isEmpty()) {
+    final Iterable<OrderEntry>
+      entries = ProjectRootManager.getInstance(project).getFileIndex().getOrderEntriesForFile(containingVirtualFile);
+    if (!entries.iterator().hasNext()) {
       notifyAfterAnnotationChanging(listOwner, annotationFQName, false);
       return;
     }
@@ -457,8 +458,8 @@ public class ExternalAnnotationsManagerImpl extends ReadableExternalAnnotationsM
     final PsiFile containingFile = element.getContainingFile();
     final VirtualFile virtualFile = containingFile.getVirtualFile();
     LOG.assertTrue(virtualFile != null);
-    final List<OrderEntry> entries = ProjectRootManager.getInstance(project).getFileIndex().getOrderEntriesForFile(virtualFile);
-    if (!entries.isEmpty()) {
+    final Iterable<OrderEntry> entries = ProjectRootManager.getInstance(project).getFileIndex().getOrderEntriesForFile(virtualFile);
+    if (entries.iterator().hasNext()) {
       for (OrderEntry entry : entries) {
         if (!(entry instanceof ModuleOrderEntry)) {
           if (AnnotationOrderRootType.getUrls(entry).length > 0) {

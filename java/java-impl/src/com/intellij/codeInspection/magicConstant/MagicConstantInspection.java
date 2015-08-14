@@ -180,7 +180,7 @@ public class MagicConstantInspection extends BaseJavaLocalInspectionTool {
     if (annotation != null) return;
     final VirtualFile virtualFile = PsiUtilCore.getVirtualFile(getModifiers);
     if (virtualFile == null) return; // no jdk to attach
-    final List<OrderEntry> entries = ProjectRootManager.getInstance(project).getFileIndex().getOrderEntriesForFile(virtualFile);
+    final Iterable<OrderEntry> entries = ProjectRootManager.getInstance(project).getFileIndex().getOrderEntriesForFile(virtualFile);
     Sdk jdk = null;
     for (OrderEntry orderEntry : entries) {
       if (orderEntry instanceof JdkOrderEntry) {

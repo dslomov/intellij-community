@@ -169,7 +169,7 @@ public class ResolveScopeManagerImpl extends ResolveScopeManager {
     final ProjectFileIndex projectFileIndex = myProjectRootManager.getFileIndex();
     final Module module = projectFileIndex.getModuleForFile(vDirectory);
     if (module == null) {
-      final List<OrderEntry> entries = projectFileIndex.getOrderEntriesForFile(virtualFile != null ? virtualFile : vDirectory);
+      final Iterable<OrderEntry> entries = projectFileIndex.getOrderEntriesForFile(virtualFile != null ? virtualFile : vDirectory);
       GlobalSearchScope result = LibraryScopeCache.getInstance(myProject).getLibraryUseScope(entries);
       return containingFile == null || virtualFile.isDirectory() || result.contains(virtualFile)
              ? result : GlobalSearchScope.fileScope(containingFile).uniteWith(result);

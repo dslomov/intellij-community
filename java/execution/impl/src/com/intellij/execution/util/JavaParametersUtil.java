@@ -89,7 +89,7 @@ public class JavaParametersUtil {
       return fileIndex.
         isInTestSourceContent(virtualFile) ? JavaParameters.JDK_AND_CLASSES_AND_TESTS : JavaParameters.JDK_AND_CLASSES;
     }
-    final List<OrderEntry> entriesForFile = fileIndex.getOrderEntriesForFile(virtualFile);
+    final Iterable<OrderEntry> entriesForFile = fileIndex.getOrderEntriesForFile(virtualFile);
     for (OrderEntry entry : entriesForFile) {
       if (entry instanceof ExportableOrderEntry && ((ExportableOrderEntry)entry).getScope() == DependencyScope.TEST) {
         return JavaParameters.JDK_AND_CLASSES_AND_TESTS;

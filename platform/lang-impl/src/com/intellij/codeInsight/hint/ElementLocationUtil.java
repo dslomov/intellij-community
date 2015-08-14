@@ -52,7 +52,7 @@ public class ElementLocationUtil {
         label.setIcon(ModuleType.get(module).getIcon());
       }
       else {
-        final List<OrderEntry> entries = fileIndex.getOrderEntriesForFile(vfile);
+        final Iterable<OrderEntry> entries = fileIndex.getOrderEntriesForFile(vfile);
 
         OrderEntry entry = null;
 

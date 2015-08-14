@@ -42,14 +42,6 @@ import org.jetbrains.jps.model.module.JpsModuleSourceRootType;
 import java.util.*;
 
 public class RootIndex {
-  public static final Comparator<OrderEntry> BY_OWNER_MODULE = new Comparator<OrderEntry>() {
-    @Override
-    public int compare(OrderEntry o1, OrderEntry o2) {
-      String name1 = o1.getOwnerModule().getName();
-      String name2 = o2.getOwnerModule().getName();
-      return name1.compareTo(name2);
-    }
-  };
   private static final Logger LOG = Logger.getInstance("#com.intellij.openapi.roots.impl.RootIndex");
 
   private final Map<VirtualFile, String> myPackagePrefixByRoot = ContainerUtil.newHashMap();
@@ -59,7 +51,7 @@ public class RootIndex {
   private final TObjectIntHashMap<JpsModuleSourceRootType<?>> myRootTypeId = new TObjectIntHashMap<JpsModuleSourceRootType<?>>();
   @NotNull private final Project myProject;
   private final PackageDirectoryCache myPackageDirectoryCache;
-  private volatile Map<VirtualFile, OrderEntry[]> myOrderEntries;
+  private volatile Map<VirtualFile, OrderEntryContainer> myOrderEntries;
 
   // made public for Upsource
   public RootIndex(@NotNull Project project, @NotNull InfoCache cache) {
@@ -162,8 +154,8 @@ public class RootIndex {
   }
 
   @NotNull
-  private Map<VirtualFile, OrderEntry[]> getOrderEntries() {
-    Map<VirtualFile, OrderEntry[]> result = myOrderEntries;
+  private Map<VirtualFile, OrderEntryContainer> getOrderEntries() {
+    Map<VirtualFile, OrderEntryContainer> result = myOrderEntries;
     if (result != null) return result;
 
     MultiMap<VirtualFile, OrderEntry> libClassRootEntries = MultiMap.createSmart();
@@ -204,14 +196,14 @@ public class RootIndex {
     for (VirtualFile file : allRoots) {
       List<VirtualFile> hierarchy = getHierarchy(file, allRoots, rootInfo);
       result.put(file, hierarchy == null
-                       ? OrderEntry.EMPTY_ARRAY
+                       ? OrderEntryContainer.EMPTY
                        : calcOrderEntries(rootInfo, depEntries, libClassRootEntries, libSourceRootEntries, hierarchy));
     }
     myOrderEntries = result;
     return result;
   }
 
-  private static OrderEntry[] calcOrderEntries(@NotNull RootInfo info,
+  private static OrderEntryContainer calcOrderEntries(@NotNull RootInfo info,
                                                @NotNull MultiMap<VirtualFile, OrderEntry> depEntries,
                                                @NotNull MultiMap<VirtualFile, OrderEntry> libClassRootEntries,
                                                @NotNull MultiMap<VirtualFile, OrderEntry> libSourceRootEntries,
@@ -233,8 +225,8 @@ public class RootIndex {
     }
 
     OrderEntry[] array = orderEntries.toArray(new OrderEntry[orderEntries.size()]);
-    Arrays.sort(array, BY_OWNER_MODULE);
-    return array;
+    Arrays.sort(array, OrderEntryContainer.BY_OWNER_MODULE);
+    return new OrderEntryContainer(array);
   }
 
   private int getRootTypeId(@NotNull JpsModuleSourceRootType<?> rootType) {
@@ -562,10 +554,10 @@ public class RootIndex {
   }
 
   @NotNull
-  public OrderEntry[] getOrderEntries(@NotNull DirectoryInfo info) {
-    if (!(info instanceof DirectoryInfoImpl)) return OrderEntry.EMPTY_ARRAY;
-    OrderEntry[] entries = this.getOrderEntries().get(((DirectoryInfoImpl)info).getRoot());
-    return entries == null ? OrderEntry.EMPTY_ARRAY : entries;
+  public OrderEntryContainer getOrderEntries(@NotNull DirectoryInfo info) {
+    if (!(info instanceof DirectoryInfoImpl)) return OrderEntryContainer.EMPTY;
+    OrderEntryContainer entries = this.getOrderEntries().get(((DirectoryInfoImpl)info).getRoot());
+    return entries == null ? OrderEntryContainer.EMPTY : entries;
   }
 
   public interface InfoCache {

@@ -108,7 +108,7 @@ public class PyBuiltinCache {
       final ProjectRootManager projectRootManager = ProjectRootManager.getInstance(project);
       sdk = projectRootManager.getProjectSdk();
       if (sdk == null) {
-        final List<OrderEntry> orderEntries = projectRootManager.getFileIndex().getOrderEntriesForFile(vfile);
+        final Iterable<OrderEntry> orderEntries = projectRootManager.getFileIndex().getOrderEntriesForFile(vfile);
         for (OrderEntry orderEntry : orderEntries) {
           if (orderEntry instanceof JdkOrderEntry) {
             sdk = ((JdkOrderEntry)orderEntry).getJdk();

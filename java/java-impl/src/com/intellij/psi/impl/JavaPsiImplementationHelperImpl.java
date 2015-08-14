@@ -164,12 +164,12 @@ public class JavaPsiImplementationHelperImpl extends JavaPsiImplementationHelper
       if (relativePath == null) {
         throw new AssertionError("Null relative path: folder=" + folder + "; root=" + sourceRoot);
       }
-      List<OrderEntry> orderEntries = index.getOrderEntriesForFile(virtualFile);
-      if (orderEntries.isEmpty()) {
+      Iterable<OrderEntry> orderEntries = index.getOrderEntriesForFile(virtualFile);
+      if (!orderEntries.iterator().hasNext()) {
         LOG.error("Inconsistent: " + DirectoryIndex.getInstance(myProject).getInfoForFile(folder).toString());
       }
       final String className = virtualFile.getNameWithoutExtension();
-      final VirtualFile[] files = orderEntries.get(0).getFiles(OrderRootType.CLASSES);
+      final VirtualFile[] files = orderEntries.iterator().next().getFiles(OrderRootType.CLASSES);
       for (VirtualFile rootFile : files) {
         final VirtualFile classFile = rootFile.findFileByRelativePath(relativePath);
         if (classFile != null) {

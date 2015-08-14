@@ -149,9 +149,9 @@ public class JavaDocumentationProvider implements CodeDocumentationProvider, Ext
     final ProjectFileIndex fileIndex = ProjectRootManager.getInstance(aClass.getProject()).getFileIndex();
     VirtualFile vFile = file.getVirtualFile();
     if (vFile != null && (fileIndex.isInLibrarySource(vFile) || fileIndex.isInLibraryClasses(vFile))) {
-      final List<OrderEntry> orderEntries = fileIndex.getOrderEntriesForFile(vFile);
-      if (orderEntries.size() > 0) {
-        final OrderEntry orderEntry = orderEntries.get(0);
+      final Iterable<OrderEntry> orderEntries = fileIndex.getOrderEntriesForFile(vFile);
+      if (orderEntries.iterator().hasNext()) {
+        final OrderEntry orderEntry = orderEntries.iterator().next();
         buffer.append("[").append(StringUtil.escapeXml(orderEntry.getPresentableName())).append("] ");
       }
     }

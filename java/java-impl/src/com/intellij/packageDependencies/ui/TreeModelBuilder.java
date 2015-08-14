@@ -319,7 +319,7 @@ public class TreeModelBuilder {
   @Nullable
   private OrderEntry getLibraryForFile(VirtualFile virtualFile) {
     if (virtualFile == null) return null;
-    List<OrderEntry> orders = myFileIndex.getOrderEntriesForFile(virtualFile);
+    Iterable<OrderEntry> orders = myFileIndex.getOrderEntriesForFile(virtualFile);
     for (OrderEntry order : orders) {
       if (order instanceof LibraryOrderEntry || order instanceof JdkOrderEntry) return order;
     }

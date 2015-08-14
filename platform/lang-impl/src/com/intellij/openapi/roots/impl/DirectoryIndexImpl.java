@@ -25,7 +25,6 @@ import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModuleRootAdapter;
 import com.intellij.openapi.roots.ModuleRootEvent;
-import com.intellij.openapi.roots.OrderEntry;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
@@ -162,17 +161,15 @@ public class DirectoryIndexImpl extends DirectoryIndex {
 
   @NotNull
   @Override
-  public OrderEntry[] getOrderEntries(@NotNull DirectoryInfo info) {
+  public OrderEntryContainer getOrderEntries(@NotNull DirectoryInfo info) {
     checkAvailability();
     return getRootIndex().getOrderEntries(info);
   }
 
   @TestOnly
   void assertConsistency(DirectoryInfo info) {
-    OrderEntry[] entries = getOrderEntries(info);
-    for (int i = 1; i < entries.length; i++) {
-      assert RootIndex.BY_OWNER_MODULE.compare(entries[i - 1], entries[i]) <= 0;
-    }
+    OrderEntryContainer entries = getOrderEntries(info);
+    entries.assertConsistency();
   }
 
   private void checkAvailability() {

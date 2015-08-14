@@ -68,11 +68,11 @@ public class RootVisitorHost {
   static void visitSdkRoots(PsiFile file, RootVisitor visitor) {
     // formality
     final VirtualFile elt_vfile = file.getOriginalFile().getVirtualFile();
-    List<OrderEntry> orderEntries = null;
+    Iterable<OrderEntry> orderEntries = null;
     if (elt_vfile != null) { // reality
       final ProjectFileIndex fileIndex = ProjectRootManager.getInstance(file.getProject()).getFileIndex();
       orderEntries = fileIndex.getOrderEntriesForFile(elt_vfile);
-      if (orderEntries.size() > 0) {
+      if (orderEntries.iterator().hasNext()) {
         for (OrderEntry entry : orderEntries) {
           if (!visitOrderEntryRoots(visitor, entry)) break;
         }

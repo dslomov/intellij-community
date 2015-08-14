@@ -109,14 +109,12 @@ public abstract class GeneratePluginClassAction extends CreateElementActionBase 
 
     final VirtualFile vFile = dir.getVirtualFile();
     if (fileIndex.isInLibrarySource(vFile) || fileIndex.isInLibraryClasses(vFile)) {
-      final List<OrderEntry> orderEntries = fileIndex.getOrderEntriesForFile(vFile);
-      if (orderEntries.isEmpty()) {
-        return null;
-      }
+      final Iterable<OrderEntry> orderEntries = fileIndex.getOrderEntriesForFile(vFile);
       Set<Module> modules = new HashSet<Module>();
       for (OrderEntry orderEntry : orderEntries) {
         modules.add(orderEntry.getOwnerModule());
       }
+      if (modules.isEmpty()) return null;
       final Module[] candidates = modules.toArray(new Module[modules.size()]);
       Arrays.sort(candidates, ModuleManager.getInstance(project).moduleDependencyComparator());
       return candidates[0];
